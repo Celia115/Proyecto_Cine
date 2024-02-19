@@ -45,5 +45,76 @@ public class Main {
         nombreCine.agregarSala(sala2);
         nombreCine.agregarSala(sala3);
         nombreCine.agregarSala(sala4);
+
+        while (true) {
+            System.out.println("\nBienvenido al Cine " + nombreCine.getNombre());
+            System.out.println("1. Ver las salas y sus pel�culas");
+            System.out.println("2. Reservar asiento");
+            System.out.println("3. Ver disponibilidad de asientos en una sala");
+            System.out.println("4. Salir");
+            System.out.print("Seleccione una opción: ");
+            int opcion = entrada.nextInt();
+
+            switch (opcion){
+                case 1:
+                    nombreCine.mostrarSalas();
+                    break;
+                case 2:
+                    System.out.print("Ingrese el número de sala: ");
+                    int numSala = entrada.nextInt();
+                    Sala salaSeleccionada = nombreCine.getSalas().get(numSala -1);
+
+                    if (salaSeleccionada != null) {
+                        System.out.println("Ha seleccionado la sala " + salaSeleccionada.getNumero() + ": " + salaSeleccionada.getPelicula().getTitulo());
+                        System.out.print("Ingrese la fila del asiento: ");
+
+                        int fila = entrada.nextInt() -1 ;
+                        System.out.print("Ingrese la columna del asiento: ");
+
+                        int columna = entrada.nextInt() -1;
+                        entrada.nextLine();
+                        System.out.print("Ingrese su email: ");
+
+                        String email = entrada.nextLine();
+                        salaSeleccionada.reservarButacas(fila, columna, email);
+                    } else {
+                        System.out.println("La sala seleccionada no existe.");
+                    }
+
+                    break;
+                case 3:
+                    System.out.print("Ingrese el n�mero de sala para ver disponibilidad de asientos: ");
+
+                    int numSalaConsulta = entrada.nextInt();
+                    Sala salaConsulta = nombreCine.getSalas().get(numSalaConsulta -1);
+
+                    if (salaConsulta != null) {
+                        System.out.println("Disponibilidad de asientos en la sala " + salaConsulta.getNumero() + ":");
+                        boolean[][] butacas = salaConsulta.getButacas();
+
+                        for (int i = 0; i < butacas.length; i++) {
+                            for (int j = 0; j < butacas[i].length; j++) {
+
+                                if (butacas[i][j] == true) {
+                                    System.out.print("[L]");
+                                }else {
+                                    System.out.print("[O]");
+                                }
+                            }
+                            System.out.println();
+                        }
+
+                    } else {
+                        System.out.println("La sala seleccionada no existe.");
+                    }
+
+                    break;
+                case 4:
+                    System.out.println("Gracias por usar nuestro servicio. ¡Hasta luego!");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Por favor, seleccione una opción válida.");
+            }
+        }
     }
 }
